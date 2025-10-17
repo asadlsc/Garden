@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Inter:wght@400;700&display=swap');
+
+:root {
+    --color-soil: #8B4513;
+    --color-grass: #4CAF50;
+    --color-water: #4FC3F7;
+    --color-wood: #A0522D;
+    --color-gold: #FFD700;
+    --color-text: #333;
+    --font-display: 'Cherry Bomb One', cursive;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* --- THEME STYLES --- */
+
+.theme-day {
+    background-color: #f0fdf4; /* Very light green background */
+}
+.theme-night {
+    background-color: #0d1a26; /* Darker blue/night sky */
+}
+
+body {
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px 10px;
+    transition: background-color 2s ease;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 5px solid var(--color-wood);
+    transition: background-color 2s ease;
+}
+
+/* Night Theme Overrides */
+.theme-night .container {
+    background-color: #1a2b3c;
+    color: #f0f0f0;
+}
+.theme-night .header h1 {
+    color: #e0f2f1;
+    text-shadow: 2px 2px 0px #004d40;
+}
+.theme-night .stats-bar {
+    background-color: #004d40;
+    color: #fff;
+}
+.theme-night .stat-item {
+    color: #fff;
+}
+.theme-night #moneyDisplay {
+    color: #ffeb3b;
+}
+.theme-night #dayDisplay {
+    color: #90caf9;
+}
+.theme-night #plotsDisplay {
+    color: #a5d6a7;
+}
+.theme-night .shop-controls {
+    background-color: #1e3d59;
+    border-color: #2c5478;
+}
+.theme-night .shop-controls h2 {
+    color: #a5d6a7;
+}
+.theme-night #currentSeedName {
+    color: #90caf9;
+}
+.theme-night #messageBox {
+    background-color: #263238;
+    color: #cfd8dc;
+    border-color: #455a64;
+}
+.theme-night .plot[data-state="EMPTY"] {
+    color: #607d8b;
+}
+.theme-night .plot {
+     border-color: #3e2723;
+}
+.theme-night .plot[data-state="MATURE"] {
+    box-shadow: 0 0 10px #ffeb3b;
+    border-color: #ffeb3b;
+}
+.theme-night .plot[data-state="GROWING"] {
+     color: #a5d6a7;
+}
+.theme-night .water-icon {
+    color: #90caf9;
+}
+/* --- END THEME STYLES --- */
+
+
+.header {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 3px solid var(--color-wood);
+}
+
+.header h1 {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--color-grass);
+    text-shadow: 2px 2px 0px var(--color-soil);
+    line-height: 1;
+}
+
+.stats-bar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #e6ffed;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-item {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+/* Shop Styles */
+.shop-controls {
+    padding: 10px;
+    background-color: #e3f2fd;
+    border-radius: 10px;
+    border: 2px solid #90caf9;
+    transition: background-color 2s ease, border-color 2s ease;
+}
+
+.shop-controls h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+}
+
+
+.garden-grid {
+    display: grid;
+    /* grid-template-columns is now set dynamically by JS */
+    gap: 10px;
+    padding: 10px;
+    background-color: #c8e6c9; /* Lighter green for the garden area */
+    border-radius: 15px;
+    border: 4px dashed var(--color-grass);
+}
+
+.plot {
+    aspect-ratio: 1 / 1;
+    background-color: var(--color-soil);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    border: 3px solid #6D4C41; /* Darker border for depth */
+    position: relative;
+    user-select: none;
+    overflow: hidden;
+    line-height: 1; /* Fix vertical alignment for emojis */
+}
+
+.plot:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.plot:active {
+    transform: scale(0.98);
+}
+
+.plot-content {
+    z-index: 10;
+    text-align: center;
+}
+
+.water-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1.2rem;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.plot[data-state="EMPTY"] {
+    background-color: var(--color-soil);
+    color: #ccc;
+    font-size: 1.2rem;
+}
+.plot[data-state="EMPTY"]:before {
+    content: 'Plant?';
+    font-family: var(--font-body);
+}
+
+.plot[data-state="SEED"] {
+    background-color: var(--color-soil);
+    color: #fff;
+}
+.plot[data-state="GROWING"] {
+    background-color: var(--color-soil);
+    color: var(--color-grass);
+}
+.plot[data-state="MATURE"] {
+    background-color: var(--color-grass);
+    color: #fff;
+    box-shadow: 0 0 10px var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-group {
+    display: flex;
+    gap: 10px;
+}
+
+.action-button {
+    padding: 12px;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 5px 0 0 #333;
+    flex-grow: 1;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 0 #333;
+}
+.action-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 0 #333;
+}
+.action-button.opacity-50 {
+    box-shadow: 0 3px 0 0 #757575;
+    background-color: #bdbdbd;
+}
+.action-button.opacity-50:hover, .action-button.opacity-50:active {
+    transform: none;
+    box-shadow: 0 5px 0 0 #757575;
+}
+
+
+#skipDayButton {
+    background-color: #03A9F4;
+    color: white;
+    box-shadow: 0 5px 0 0 #0288d1;
+}
+#skipDayButton:active {
+    box-shadow: 0 2px 0 0 #0288d1;
+}
+
+#expandMapButton {
+    background-color: #FF7043; /* Orange/Red for spending big money */
+    color: white;
+    box-shadow: 0 5px 0 0 #E64A19;
+}
+#expandMapButton:active {
+    box-shadow: 0 2px 0 0 #E64A19;
+}
+
+#messageBox {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    min-height: 40px;
+    font-style: italic;
+    background-color: #fff3e0;
+    color: #E65100;
+    border: 1px solid #ffcc80;
+}
+
+/* Time Bar Styles */
+.time-bar-container {
+    height: 12px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+.time-bar-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ffeb3b, #4CAF50); /* Day color gradient */
+    transition: background-color 2s ease, width 1s linear;
+    position: relative;
+}
+.time-bar-progress[data-theme="night"] {
+     background: linear-gradient(90deg, #1A237E, #455A64); /* Night color gradient */
+}
+.time-bar-progress::after {
+    content: attr(data-time);
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 2px #000;
+}
+
+/* Modal for Harvest/Error */
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    font-family: var(--font-body);
+}
+
+.modal-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-grass);
+    margin-bottom: 10px;
+}
+
+.modal-button {
+    background-color: #FFC107;
+    color: var(--color-text);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-top: 15px;
+    transition: background-color 0.2s;
+    box-shadow: 0 3px 0 0 #cc9900;
+}
+
+.modal-button:active {
+     transform: translateY(2px);
+    box-shadow: 0 1px 0 0 #cc9900;
+}
+
+.modal-button:hover {
+    background-color: #FFB300;
+}

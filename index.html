@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Clicker Garden</title>
+    <!-- Load Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-day">
+
+<div class="container">
+    <header class="header">
+        <h1>🌱 The Clicker Garden 🍅</h1>
+        <p class="text-sm text-gray-600">Plant, Water, Harvest!</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span id="moneyDisplay" class="text-xl text-yellow-600"></span>
+            <div class="text-xs">Money</div>
+        </div>
+        <div class="stat-item">
+            <span id="dayDisplay" class="text-xl text-blue-600"></span>
+            <div class="text-xs">Day</div>
+        </div>
+        <div class="stat-item">
+            <span id="plotsDisplay" class="text-xl text-green-600"></span>
+            <div class="text-xs">Plots</div>
+        </div>
+    </div>
+    
+    <!-- Seed Shop UI -->
+    <div class="shop-controls">
+        <h2 class="text-xl font-bold mb-2 text-center text-green-700 font-display">Seed Shop (Current Seed: <span id="currentSeedName" class="text-blue-700"></span>)</h2>
+        <!-- Seed Selector Dropdown -->
+        <select id="seedSelector" class="w-full p-3 border-2 border-green-500 rounded-xl bg-white text-lg font-bold shadow-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body"></select>
+    </div>
+    <!-- END NEW SHOP UI -->
+
+
+    <div class="garden-grid" id="gardenGrid">
+        <!-- Plot elements will be inserted here by JavaScript -->
+    </div>
+
+    <!-- Time Bar -->
+    <div class="time-bar-container">
+        <div id="timeBarProgress" class="time-bar-progress" data-time="02:00"></div>
+    </div>
+    <!-- END Time Bar -->
+
+    <div id="messageBox">Ready to grow!</div>
+
+    <div class="controls">
+        <div class="control-group">
+            <button id="skipDayButton" class="action-button">
+                ⚡ Skip Day (\$100)
+            </button>
+            <button id="expandMapButton" class="action-button">
+                🗺️ Expand Map (\$1000)
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modal">
+    <div class="modal-content">
+        <div class="modal-title" id="modalTitle"></div>
+        <p id="modalMessage"></p>
+        <button id="modalCloseButton" class="modal-button">Close</button>
+    </div>
+</div>
+
+<!-- Link to external JavaScript file -->
+<script src="script.js"></script>
+</body>
+</html>
+
